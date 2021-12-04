@@ -25,4 +25,8 @@ terraform plan -var "project=PROJECT_ID"
 ```bash
 terraform apply -var "project=PROJECT_ID"
 ```
+4. Firewall to use IAP is enabled. So access VM by following command. Replace `INSTANCE_NAME` with the name of currently created instance.
+```bash
+gcloud beta compute ssh INSTANCE_NAME --tunnel-through-iap
+```
 
