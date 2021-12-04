@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '**/*.tf'
+      - '.github/workflows/tflint.yml'
 
 jobs:
   lint:
