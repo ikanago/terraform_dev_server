@@ -7,9 +7,23 @@ terraform {
   }
 }
 
+variable "project" {
+  type = string
+}
+
+variable "region" {
+  type = string
+  default = "us-west1"
+}
+
+variable "zone" {
+  type = string
+  default = "us-west1-a"
+}
+
 provider "google" {
-  project     = "dev-env-310511"
-  region      = "us-west1"
+  project     = var.project
+  region      = var.region
 }
 
 resource "random_id" "instance_id" {
@@ -19,7 +33,7 @@ resource "random_id" "instance_id" {
 resource "google_compute_instance" "dev_env" {
   name = "dev-env-${random_id.instance_id.hex}"
   machine_type = "e2-micro"
-  zone = "us-west1-a"
+  zone = var.zone
 
   boot_disk {
     initialize_params {
@@ -29,10 +43,6 @@ resource "google_compute_instance" "dev_env" {
 
   network_interface {
     network = "default"
-
-    access_config {
-      # Include this section to give the VM an external ip address
-    }
   }
 }
 
