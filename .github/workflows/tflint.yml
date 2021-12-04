@@ -1,4 +1,4 @@
-name: 'actionlint'
+name: 'tflint'
 
 on:
   pull_request:
