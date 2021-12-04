@@ -12,11 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-
       - name: Validate
-        run: docker run -it --rm \
-          --mount type=bind,source=$PWD/renovate.json,target=/usr/src/app/config.json,readonly \
-          renovate/renovate:29.32.0-slim renovate-config-validator
+        run: docker run --rm \
+          --mount type=bind,source="$PWD"/renovate.json,target=/usr/src/app/config.json,readonly \
+          renovate/renovate:29.32.0-slim \
+          renovate-config-validator
