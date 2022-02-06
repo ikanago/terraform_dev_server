@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "4.9.0"
     }
   }
@@ -12,18 +12,18 @@ variable "project" {
 }
 
 variable "region" {
-  type = string
+  type    = string
   default = "us-west1"
 }
 
 variable "zone" {
-  type = string
+  type    = string
   default = "us-west1-a"
 }
 
 provider "google" {
-  project     = var.project
-  region      = var.region
+  project = var.project
+  region  = var.region
 }
 
 resource "random_id" "instance_id" {
@@ -31,9 +31,9 @@ resource "random_id" "instance_id" {
 }
 
 resource "google_compute_instance" "dev_env" {
-  name = "dev-env-${random_id.instance_id.hex}"
+  name         = "dev-env-${random_id.instance_id.hex}"
   machine_type = "e2-micro"
-  zone = var.zone
+  zone         = var.zone
 
   boot_disk {
     initialize_params {
@@ -47,13 +47,13 @@ resource "google_compute_instance" "dev_env" {
 }
 
 resource "google_compute_firewall" "ssh" {
-  name = "allow-ssh-from-iap"
-  network = "default"
-  direction = "INGRESS"
+  name          = "allow-ssh-from-iap"
+  network       = "default"
+  direction     = "INGRESS"
   source_ranges = ["35.235.240.0/20"]
 
   allow {
     protocol = "tcp"
-    ports = ["22"]
+    ports    = ["22"]
   }
 }
