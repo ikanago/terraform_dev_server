@@ -1,4 +1,4 @@
-name: 'tflint'
+name: 'check'
 
 on:
   pull_request:
@@ -7,14 +7,27 @@ on:
       - '.github/workflows/tflint.yml'
 
 jobs:
-  lint:
+  check:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+
+      - name: Check fmt
+        id: fmt
+        run: terraform fmt -check
 
       - name: Run tflint
         uses: reviewdog/action-tflint@v1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: 'github-pr-review'
-          fail_on_error: true
+
+      - name: Init
+        id: init
+        run: terraform init
+
+      - name: Validate
+        id: validate
+        run: terraform validate -no-color
+
