@@ -43,6 +43,9 @@ resource "google_compute_instance" "dev_env" {
 
   network_interface {
     network = "default"
+
+    access_config {
+    }
   }
 }
 
